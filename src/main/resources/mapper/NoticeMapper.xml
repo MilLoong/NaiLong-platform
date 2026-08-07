@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nailong.mapper.NoticeMapper">
+
+    <!-- 基础结果映射 -->
+    <resultMap id="BaseResultMap" type="com.nailong.model.entity.Notice">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="type" property="type"/>
+        <result column="status" property="status"/>
+        <result column="top" property="top"/>
+        <result column="view_count" property="viewCount"/>
+        <result column="publisher_id" property="publisherId"/>
+        <result column="publish_time" property="publishTime"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <!-- 基础SQL字段 -->
+    <sql id="Base_Column_List">
+        id, title, content, type, status, top, view_count, publisher_id, publish_time, create_time, update_time
+    </sql>
+
+    <!-- 根据ID查询公告 -->
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM notice
+        WHERE id = #{id}
+        AND deleted = 0
+    </select>
+
+    <!-- 查询已发布的公告列表 -->
+    <select id="selectPublishedList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM notice
+        WHERE status = 1
+        AND deleted = 0
+        ORDER BY top DESC, publish_time DESC
+    </select>
+
+    <!-- 查询所有公告列表 -->
+    <select id="selectAllList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM notice
+        WHERE deleted = 0
+        ORDER BY create_time DESC
+    </select>
+
+    <!-- 增加浏览次数 -->
+    <update id="incrementViewCount">
+        UPDATE notice
+        SET view_count = view_count + 1
+        WHERE id = #{id}
+        AND deleted = 0
+    </update>
+
+    <!-- 发布公告 -->
+    <update id="publishNotice">
+        UPDATE notice
+        SET status = 1,
+        publish_time = NOW()
+        WHERE id = #{id}
+        AND deleted = 0
+    </update>
+
+</mapper>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nailong.mapper.UserDeviceMapper">
+
+    <!-- 基础结果映射 -->
+    <resultMap id="BaseResultMap" type="com.nailong.model.entity.UserDevice">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="device_id" property="deviceId"/>
+        <result column="device_name" property="deviceName"/>
+        <result column="device_type" property="deviceType"/>
+        <result column="os" property="os"/>
+        <result column="browser" property="browser"/>
+        <result column="ip" property="ip"/>
+        <result column="location" property="location"/>
+        <result column="login_time" property="loginTime"/>
+        <result column="last_active_time" property="lastActiveTime"/>
+        <result column="status" property="status"/>
+        <result column="trusted" property="trusted"/>
+        <result column="fingerprint" property="fingerprint"/>
+    </resultMap>
+
+    <!-- 根据用户ID查询设备列表 -->
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        SELECT
+            id, user_id, device_id, device_name, device_type,
+            os, browser, ip, location, login_time, last_active_time,
+            status, trusted, fingerprint
+        FROM
+            user_device
+        WHERE
+            deleted = 0
+            AND user_id = #{userId}
+        ORDER BY
+            last_active_time DESC
+    </select>
+
+    <!-- 根据设备ID查询设备 -->
+    <select id="selectByDeviceId" resultMap="BaseResultMap">
+        SELECT
+            id, user_id, device_id, device_name, device_type,
+            os, browser, ip, location, login_time, last_active_time,
+            status, trusted, fingerprint
+        FROM
+            user_device
+        WHERE
+            deleted = 0
+            AND device_id = #{deviceId}
+        LIMIT 1
+    </select>
+
+    <!-- 根据用户ID和设备ID查询设备 -->
+    <select id="selectByUserIdAndDeviceId" resultMap="BaseResultMap">
+        SELECT
+            id, user_id, device_id, device_name, device_type,
+            os, browser, ip, location, login_time, last_active_time,
+            status, trusted, fingerprint
+        FROM
+            user_device
+        WHERE
+            deleted = 0
+            AND user_id = #{userId}
+            AND device_id = #{deviceId}
+        LIMIT 1
+    </select>
+
+    <!-- 统计在线设备数 -->
+    <select id="countOnlineDevices" resultType="java.lang.Long">
+        SELECT
+            COUNT(*)
+        FROM
+            user_device
+        WHERE
+            deleted = 0
+            AND user_id = #{userId}
+            AND status = 1
+            AND last_active_time >= DATE_SUB(NOW(), INTERVAL 5 MINUTE)
+    </select>
+
+    <!-- 更新设备最后活跃时间 -->
+    <update id="updateLastActiveTime">
+        UPDATE user_device
+        SET last_active_time = #{lastActiveTime}, status = 1
+        WHERE id = #{id}
+    </update>
+
+    <!-- 更新设备状态 -->
+    <update id="updateStatus">
+        UPDATE user_device
+        SET status = #{status}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 更新设备可信状态 -->
+    <update id="updateTrusted">
+        UPDATE user_device
+        SET trusted = #{trusted}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 登出用户其他设备 -->
+    <update id="logoutOtherDevices">
+        UPDATE user_device
+        SET status = 0
+        WHERE user_id = #{userId}
+        <if test="excludeDeviceId != null">
+            AND device_id != #{excludeDeviceId}
+        </if>
+    </update>
+
+</mapper>

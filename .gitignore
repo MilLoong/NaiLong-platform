@@ -1,0 +1,77 @@
+# ===== Build =====
+target/
+*.class
+*.jar
+*.war
+*.ear
+hs_err_pid*
+replay_pid*
+*.hprof
+
+# ===== IDE / Editor =====
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+.factorypath
+.apt_generated/
+.springBeans
+.sts4-cache/
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
+Desktop.ini
+ehthumbs.db
+
+# ===== Local secrets / env (DO NOT COMMIT) =====
+.env
+.env.*
+!.env.example
+*.local.yml
+*.local.yaml
+*.local.properties
+application-local.yml
+application-local.yaml
+**/application-local.yml
+**/secrets/
+**/credentials/
+**/credential/
+
+# ===== Runtime / data =====
+logs/
+*.log
+*.tmp
+*.bak
+*.pid
+dump.rdb
+*.rdb
+appendonly.aof
+**/appendonlydir/
+docker/mysql/data/
+docker/redis/data/
+uploads/
+src/main/resources/static/uploads/**
+!src/main/resources/static/uploads/.gitkeep
+
+# ===== Temp / scratch =====
+_*.py
+FIXES.md
+*.orig
+*.rej
+
+# ===== Maven / tooling =====
+.mvn/wrapper/maven-wrapper.jar
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties

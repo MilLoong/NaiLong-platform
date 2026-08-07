@@ -1,0 +1,115 @@
+# 生产环境配置
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  # 生产环境数据源配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://mysql:3306/nailong?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 50
+      auto-commit: true
+      idle-timeout: 60000
+      pool-name: NaiLongHikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
+
+  # 生产环境Redis配置
+  data:
+    redis:
+      host: ${REDIS_HOST:redis}
+      port: ${REDIS_PORT:6379}
+      database: 0
+      timeout: 3000ms
+      lettuce:
+        pool:
+          max-active: 50
+          max-idle: 20
+          min-idle: 10
+          max-wait: 5000ms
+
+  # 生产环境邮件配置
+  mail:
+    host: smtp.nailong.com
+    port: 465
+    username: noreply@nailong.com
+    password: ${MAIL_PASSWORD}
+    protocol: smtp
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+          starttls:
+            enable: false
+
+# 生产环境MyBatis Plus配置
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+
+# 生产环境服务器配置
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+    session:
+      timeout: 15m
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 200
+    min-spare-threads: 20
+    connection-timeout: 60000
+
+# 生产环境日志配置
+logging:
+  level:
+    com.nailong: info
+    org.springframework.web: warn
+    org.hibernate: warn
+    org.mybatis: info
+  file:
+    name: /var/log/nailong/NaiLong-platform.log
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
+# 生产环境CORS配置（更严格）
+nailong:
+  security:
+    api-docs-enabled: false
+
+  cors:
+    allowed-origins: "https://www.nailong.com,https://nailong.com"
+    allowed-methods: "GET,POST,PUT,DELETE,OPTIONS"
+    allowed-headers: "Authorization,Content-Type,Accept,X-Requested-With"
+    allow-credentials: true
+    max-age: 3600
+
+  # 生产环境缓存配置
+  cache:
+    caffeine:
+      spec: maximumSize=500,expireAfterWrite=300s
+  
+  # 生产环境JWT配置（过期时间为秒；密钥必须通过环境变量注入）
+  jwt:
+    secret: ${JWT_SECRET}
+    access-token-expire: 3600
+    refresh-token-expire: 604800
+    issuer: NaiLong-platform
+
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
+
+knife4j:
+  enable: false

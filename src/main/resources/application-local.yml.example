@@ -1,0 +1,33 @@
+# Local-only overrides. Copy to application-local.yml (gitignored).
+# Start with: mvn spring-boot:run -Dspring-boot.run.profiles=dev,local
+spring:
+  config:
+    activate:
+      on-profile: local
+
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/nailong?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: nailong
+    password: change_me_db
+
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password: "change_me_redis"
+      database: 1
+
+  mail:
+    username: your_email@example.com
+    password: your_mail_auth_code
+
+redisson:
+  address: "redis://127.0.0.1:6379"
+  password: "change_me_redis"
+
+nailong:
+  jwt:
+    secret: change_me_to_a_long_random_secret_at_least_32_chars
+  cors:
+    allowed-origins: "http://localhost:3000,http://127.0.0.1:3000"
+    allow-credentials: true

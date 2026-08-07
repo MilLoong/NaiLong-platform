@@ -1,0 +1,81 @@
+# Dev profile (non-secret defaults). Put real secrets in application-local.yml
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/nailong?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${DB_USERNAME:nailong}
+    password: ${DB_PASSWORD:changeme}
+    hikari:
+      minimum-idle: 3
+      maximum-pool-size: 10
+      connection-timeout: 5000
+
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password: "${REDIS_PASSWORD:changeme}"
+      database: 1
+
+  mail:
+    host: smtp.qq.com
+    port: 587
+    username: ${MAIL_USERNAME:your_email@example.com}
+    password: ${MAIL_PASSWORD:changeme}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  cache:
+    caffeine:
+      spec: maximumSize=100,expireAfterWrite=60s
+
+redisson:
+  address: "redis://127.0.0.1:6379"
+  password: "${REDIS_PASSWORD:changeme}"
+  database: 0
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+debug: true
+logging:
+  level:
+    com.nailong: debug
+    org.springframework.web: info
+    org.hibernate: info
+    org.mybatis: debug
+
+nailong:
+  security:
+    api-docs-enabled: true
+  cors:
+    allowed-origins: "*"
+    allowed-methods: "GET,POST,PUT,DELETE,OPTIONS"
+    allowed-headers: "*"
+    allow-credentials: false
+  jwt:
+    secret: ${JWT_SECRET:dev_only_change_me_use_application_local_yml}
+    access-token-expire: 86400
+    refresh-token-expire: 604800
+    issuer: NaiLong-platform
+  score:
+    decay-rate: 0.01
+    min-score: 10
+  rank:
+    cache-expire: 3600
+    page-size: 20
+  code:
+    expire: 300

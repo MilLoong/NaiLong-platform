@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nailong.mapper.SubmissionMapper">
+    
+    <!-- 检查用户是否已解决该题目 -->
+    <select id="isProblemSolvedByUser" resultType="java.lang.Integer">
+        SELECT COUNT(1) 
+        FROM submission 
+        WHERE 
+            user_id = #{userId} AND 
+            problem_id = #{problemId} AND 
+            status = 'ACCEPTED' AND 
+            deleted = 0
+    </select>
+    
+    <!-- 获取用户的提交记录 -->
+    <select id="getUserSubmissions" resultType="com.nailong.model.entity.Submission">
+        SELECT * 
+        FROM submission 
+        WHERE 
+            user_id = #{userId} AND 
+            deleted = 0 
+        ORDER BY create_time DESC 
+        LIMIT #{limit}
+    </select>
+    
+    <!-- 获取题目的提交统计 -->
+    <select id="getProblemSubmissionStats" resultType="com.nailong.model.dto.submission.SubmissionCountDTO">
+        SELECT 
+            COUNT(1) AS total_submissions, 
+            COUNT(CASE WHEN status = 'ACCEPTED' THEN 1 END) AS success_submissions, 
+            #{problemId} AS problem_id 
+        FROM submission 
+        WHERE 
+            problem_id = #{problemId} AND 
+            deleted = 0
+    </select>
+    
+</mapper>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nailong.mapper.OperationLogMapper">
+
+    <!-- 基础结果映射 -->
+    <resultMap id="BaseResultMap" type="com.nailong.model.entity.OperationLog">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="username" property="username"/>
+        <result column="operation" property="operation"/>
+        <result column="method" property="method"/>
+        <result column="params" property="params"/>
+        <result column="result" property="result"/>
+        <result column="ip" property="ip"/>
+        <result column="location" property="location"/>
+        <result column="time_cost" property="timeCost"/>
+        <result column="status" property="status"/>
+        <result column="error_msg" property="errorMsg"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <!-- 分页查询操作日志列表 -->
+    <select id="selectLogList" resultMap="BaseResultMap">
+        SELECT
+            id, user_id, username, operation, method, params, result,
+            ip, location, time_cost, status, error_msg, create_time
+        FROM
+            operation_log
+        WHERE
+            deleted = 0
+        <if test="startTime != null">
+            AND create_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null">
+            AND create_time &lt;= #{endTime}
+        </if>
+        <if test="operation != null and operation != ''">
+            AND operation LIKE CONCAT('%', #{operation}, '%')
+        </if>
+        <if test="username != null and username != ''">
+            AND username LIKE CONCAT('%', #{username}, '%')
+        </if>
+        ORDER BY
+            create_time DESC
+        LIMIT #{current}, #{size}
+    </select>
+
+    <!-- 查询操作日志总数 -->
+    <select id="countLogList" resultType="java.lang.Long">
+        SELECT
+            COUNT(*)
+        FROM
+            operation_log
+        WHERE
+            deleted = 0
+        <if test="startTime != null">
+            AND create_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null">
+            AND create_time &lt;= #{endTime}
+        </if>
+        <if test="operation != null and operation != ''">
+            AND operation LIKE CONCAT('%', #{operation}, '%')
+        </if>
+        <if test="username != null and username != ''">
+            AND username LIKE CONCAT('%', #{username}, '%')
+        </if>
+    </select>
+
+    <!-- 根据用户ID查询操作日志 -->
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        SELECT
+            id, user_id, username, operation, method, params, result,
+            ip, location, time_cost, status, error_msg, create_time
+        FROM
+            operation_log
+        WHERE
+            deleted = 0
+            AND user_id = #{userId}
+        ORDER BY
+            create_time DESC
+        LIMIT #{limit}
+    </select>
+
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nailong.mapper.ProblemMapper">
+    
+    <!-- 更新题目分数(分数衰减) -->
+    <update id="updateScoreAndCount">
+        UPDATE problem 
+        SET 
+            current_score = GREATEST(#{newScore}, min_score), 
+            solved_count = solved_count + 1, 
+            submit_count = submit_count + 1, 
+            update_time = NOW() 
+        WHERE 
+            id = #{problemId} AND deleted = 0
+    </update>
+    
+    <!-- 增加提交次数 -->
+    <update id="increaseSubmitCount">
+        UPDATE problem 
+        SET 
+            submit_count = submit_count + 1, 
+            update_time = NOW() 
+        WHERE 
+            id = #{problemId} AND deleted = 0
+    </update>
+    
+</mapper>
