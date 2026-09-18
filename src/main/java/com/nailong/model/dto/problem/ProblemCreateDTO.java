@@ -17,11 +17,13 @@ public class ProblemCreateDTO implements Serializable {
     
     @NotBlank(message = "题目标题不能为空")
     @Schema(description = "题目标题", example = "实现一个简单的计算器")
-    private String title;
+    private String title;  ///< 题目标题
+
     
     @NotBlank(message = "题目描述不能为空")
     @Schema(description = "题目描述")
-    private String description;
+    private String description;  ///< 题目描述
+
     
     @NotBlank(message = "题目类型不能为空")
     @Schema(description = "题目类型(CHOICE/FLAG/FILE/CODE)", example = "FLAG")
@@ -29,7 +31,8 @@ public class ProblemCreateDTO implements Serializable {
     
     @NotBlank(message = "所属方向不能为空")
     @Schema(description = "所属方向", example = "backend")
-    private String direction;
+    private String direction;  ///< 所属方向
+
     
     @NotBlank(message = "难度不能为空")
     @Schema(description = "难度(EASY/MEDIUM/HARD)", example = "MEDIUM")
@@ -37,20 +40,24 @@ public class ProblemCreateDTO implements Serializable {
     
     @NotNull(message = "基础分数不能为空")
     @Schema(description = "基础分数", example = "100")
-    private Integer baseScore;
+    private Integer baseScore;  ///< 基础分数
+
     
     @Schema(description = "答案(选择题/Flag题)")
     private String answer;
     
     @Schema(description = "附件URL")
-    private String attachmentUrl;
+    private String attachmentUrl;  ///< 附件URL
+
     
     @Schema(description = "提示信息")
-    private String hint;
+    private String hint;  ///< 提示信息
+
     
     @Schema(description = "标签(逗号分隔)", example = "算法,数据结构")
     private String tags;
     
     @Schema(description = "排序权重", example = "0")
-    private Integer sortOrder;
+    private Integer sortOrder;  ///< 排序权重
+
 }

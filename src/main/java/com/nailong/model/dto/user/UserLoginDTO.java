@@ -16,9 +16,11 @@ public class UserLoginDTO implements Serializable {
     
     @NotBlank(message = "用户名不能为空")
     @Schema(description = "用户名或邮箱", example = "nailong2024")
-    private String username;
+    private String username;  ///< 用户名或邮箱
+
     
     @NotBlank(message = "密码不能为空")
     @Schema(description = "密码", example = "Password123")
-    private String password;
+    private String password;  ///< 密码
+
 }

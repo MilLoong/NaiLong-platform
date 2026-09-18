@@ -12,18 +12,9 @@ import java.lang.annotation.*;
 @Documented
 public @interface Log {
 
-    /** 操作类型 */
-    String operation() default "";
-
-    /** 操作备注 */
-    String remark() default "";
-
-    /** 是否记录请求参数 */
-    boolean recordParams() default true;
-
-    /** 是否记录返回结果 */
-    boolean recordResult() default true;
-
-    /** 是否记录异常信息 */
-    boolean recordError() default true;
+    String operation() default "";  ///< 操作类型
+    String remark() default "";  ///< 操作备注
+    boolean recordParams() default true;  ///< 是否记录请求参数
+    boolean recordResult() default true;  ///< 是否记录返回结果
+    boolean recordError() default true;  ///< 是否记录异常信息
 }

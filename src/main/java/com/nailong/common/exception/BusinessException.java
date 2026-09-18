@@ -12,16 +12,8 @@ public class BusinessException extends RuntimeException {
     
     private static final long serialVersionUID = 1L;
     
-    /**
-     * 错误码
-     */
-    private final Integer code;
-    
-    /**
-     * 错误信息
-     */
-    private final String message;
-    
+    private final Integer code;  ///< 错误码
+    private final String message;  ///< 错误信息
     /**
      * @brief 构造业务异常（默认 500 状态码）
      * @param message 错误信息

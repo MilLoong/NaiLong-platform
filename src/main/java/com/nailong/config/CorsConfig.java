@@ -37,7 +37,7 @@ public class CorsConfig {
 
     /**
      * @brief 创建 CORS 配置源
-     * @return 注册到 /** 路径的 CorsConfigurationSource
+     * @return 注册到全部路径的 CorsConfigurationSource
      */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {

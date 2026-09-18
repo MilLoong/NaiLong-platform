@@ -14,20 +14,26 @@ import java.time.LocalDateTime;
 public class LogQueryDTO {
 
     @Schema(description = "开始时间")
-    private LocalDateTime startTime;
+    private LocalDateTime startTime;  ///< 开始时间
+
 
     @Schema(description = "结束时间")
-    private LocalDateTime endTime;
+    private LocalDateTime endTime;  ///< 结束时间
+
 
     @Schema(description = "操作类型")
-    private String operation;
+    private String operation;  ///< 操作类型
+
 
     @Schema(description = "用户名")
-    private String username;
+    private String username;  ///< 用户名
+
 
     @Schema(description = "当前页", example = "1")
-    private Integer pageNum = 1;
+    private Integer pageNum = 1;  ///< 当前页
+
 
     @Schema(description = "每页大小", example = "10")
-    private Integer pageSize = 10;
+    private Integer pageSize = 10;  ///< 每页大小
+
 }

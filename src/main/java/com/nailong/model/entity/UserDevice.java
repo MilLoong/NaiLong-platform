@@ -19,75 +19,20 @@ public class UserDevice extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 用户ID
-     */
-    private Long userId;
-
-    /**
-     * 设备ID (唯一标识)
-     */
-    private String deviceId;
-
-    /**
-     * 设备名称
-     */
-    private String deviceName;
-
-    /**
-     * 设备类型 (PC/MOBILE/TABLET)
-     */
-    private String deviceType;
-
-    /**
-     * 操作系统
-     */
-    private String os;
-
-    /**
-     * 浏览器
-     */
-    private String browser;
-
-    /**
-     * IP地址
-     */
-    private String ip;
-
-    /**
-     * IP归属地
-     */
-    private String location;
-
-    /**
-     * 登录时间
-     */
+    private Long userId;  ///< 用户ID
+    private String deviceId;  ///< 设备ID (唯一标识)
+    private String deviceName;  ///< 设备名称
+    private String deviceType;  ///< 设备类型 (PC/MOBILE/TABLET)
+    private String os;  ///< 操作系统
+    private String browser;  ///< 浏览器
+    private String ip;  ///< IP地址
+    private String location;  ///< IP归属地
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private LocalDateTime loginTime;
-
-    /**
-     * 最后活跃时间
-     */
+    private LocalDateTime loginTime;  ///< 登录时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private LocalDateTime lastActiveTime;
-
-    /**
-     * 状态 (0-离线 1-在线)
-     */
-    private Integer status;
-
-    /**
-     * 是否可信设备 (0-否 1-是)
-     */
-    private Integer trusted;
-
-    /**
-     * 设备指纹信息
-     */
-    private String fingerprint;
-    
-    /**
-     * User-Agent信息
-     */
-    private String userAgent;
+    private LocalDateTime lastActiveTime;  ///< 最后活跃时间
+    private Integer status;  ///< 状态 (0-离线 1-在线)
+    private Integer trusted;  ///< 是否可信设备 (0-否 1-是)
+    private String fingerprint;  ///< 设备指纹信息
+    private String userAgent;  ///< User-Agent信息
 }

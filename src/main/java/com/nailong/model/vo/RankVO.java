@@ -18,81 +18,21 @@ public class RankVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 用户ID
-     */
-    private Long userId;
-
-    /**
-     * 用户名
-     */
-    private String username;
-
-    /**
-     * 用户昵称
-     */
-    private String nickname;
-
-    /**
-     * 用户头像
-     */
-    private String avatar;
-
-    /**
-     * 解决的问题数量
-     */
-    private Integer solvedProblemsCount;
-
-    /**
-     * 总提交次数
-     */
-    private Integer totalSubmissionsCount;
-
-    /**
-     * 通过率（百分比）
-     */
-    private Double passRate;
-
-    /**
-     * 排名
-     */
-    private Integer rank;
-
-    /**
-     * 用户角色（0：普通用户，1：管理员）
-     */
-    private Integer role;
-
-    /**
-     * 用户注册时间（毫秒时间戳）
-     */
-    private Long registerTime;
-
-    /**
-     * 最后登录时间（毫秒时间戳）
-     */
-    private Long lastLoginTime;
-
-    /**
-     * 用户积分
-     */
-    private Integer score;
-
-    /**
-     * 用户等级
-     */
-    private String level;
-
-    /**
-     * 是否在线
-     */
-    private Boolean isOnline;
-
-    /**
-     * 连续登录天数
-     */
-    private Integer consecutiveLoginDays;
-
+    private Long userId;  ///< 用户ID
+    private String username;  ///< 用户名
+    private String nickname;  ///< 用户昵称
+    private String avatar;  ///< 用户头像
+    private Integer solvedProblemsCount;  ///< 解决的问题数量
+    private Integer totalSubmissionsCount;  ///< 总提交次数
+    private Double passRate;  ///< 通过率（百分比）
+    private Integer rank;  ///< 排名
+    private Integer role;  ///< 用户角色（0：普通用户，1：管理员）
+    private Long registerTime;  ///< 用户注册时间（毫秒时间戳）
+    private Long lastLoginTime;  ///< 最后登录时间（毫秒时间戳）
+    private Integer score;  ///< 用户积分
+    private String level;  ///< 用户等级
+    private Boolean isOnline;  ///< 是否在线
+    private Integer consecutiveLoginDays;  ///< 连续登录天数
     /**
      * 创建排名视图对象的构建器
      * @return RankVO构建器

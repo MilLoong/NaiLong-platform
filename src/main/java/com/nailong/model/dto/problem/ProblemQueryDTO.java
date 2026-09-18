@@ -14,20 +14,26 @@ import java.io.Serializable;
 public class ProblemQueryDTO implements Serializable {
     
     @Schema(description = "题目类型")
-    private String type;
+    private String type;  ///< 题目类型
+
     
     @Schema(description = "所属方向")
-    private String direction;
+    private String direction;  ///< 所属方向
+
     
     @Schema(description = "难度")
-    private String difficulty;
+    private String difficulty;  ///< 难度
+
     
     @Schema(description = "关键词搜索")
-    private String keyword;
+    private String keyword;  ///< 关键词搜索
+
     
     @Schema(description = "页码", example = "1")
-    private Integer pageNum = 1;
+    private Integer pageNum = 1;  ///< 页码
+
     
     @Schema(description = "每页数量", example = "20")
-    private Integer pageSize = 20;
+    private Integer pageSize = 20;  ///< 每页数量
+
 }

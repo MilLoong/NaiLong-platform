@@ -15,26 +15,11 @@ public class Result<T> implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
-    /**
-     * 状态码
-     */
-    private Integer code;
-    
-    /**
-     * 返回消息
-     */
-    private String message;
-    
-    /**
-     * 返回数据
-     */
-    private T data;
-    
-    /**
-     * 时间戳
-     */
-    private Long timestamp;
-    
+    private Integer code;  ///< 状态码
+    private String message;  ///< 返回消息
+    private T data;  ///< 返回数据
+    private Long timestamp;  ///< 时间戳
+
     public Result() {
         this.timestamp = System.currentTimeMillis();
     }

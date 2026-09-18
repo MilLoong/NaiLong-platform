@@ -15,9 +15,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidEmail {
     
-    /** 校验失败时的提示信息 */
-    String message() default "邮箱格式不正确";
-    
+    String message() default "邮箱格式不正确";  ///< 校验失败时的提示信息
     Class<?>[] groups() default {};
     
     Class<? extends Payload>[] payload() default {};

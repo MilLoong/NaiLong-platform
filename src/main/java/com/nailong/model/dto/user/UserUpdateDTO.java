@@ -15,20 +15,26 @@ import java.io.Serializable;
 public class UserUpdateDTO implements Serializable {
     
     @Schema(description = "昵称")
-    private String nickname;
+    private String nickname;  ///< 昵称
+
     
     @Schema(description = "头像URL")
-    private String avatar;
+    private String avatar;  ///< 头像URL
+
     
     @Schema(description = "手机号")
-    private String phone;
+    private String phone;  ///< 手机号
+
     
     @Schema(description = "年级")
-    private String grade;
+    private String grade;  ///< 年级
+
     
     @Schema(description = "专业")
-    private String major;
+    private String major;  ///< 专业
+
     
     @Schema(description = "招新方向")
-    private String direction;
+    private String direction;  ///< 招新方向
+
 }

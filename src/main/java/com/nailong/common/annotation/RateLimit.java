@@ -12,12 +12,7 @@ import java.lang.annotation.*;
 @Documented
 public @interface RateLimit {
     
-    /** 限流 QPS（每秒请求数） */
-    int qps() default 10;
-    
-    /** 限流时间窗口（秒） */
-    int timeout() default 1;
-    
-    /** 限流维度（IP/USER） */
-    String type() default "IP";
+    int qps() default 10;  ///< 限流 QPS（每秒请求数）
+    int timeout() default 1;  ///< 限流时间窗口（秒）
+    String type() default "IP";  ///< 限流维度（IP/USER）
 }

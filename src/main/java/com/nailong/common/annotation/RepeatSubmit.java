@@ -12,9 +12,6 @@ import java.lang.annotation.*;
 @Documented
 public @interface RepeatSubmit {
     
-    /** 间隔时间（秒），默认 5 秒 */
-    int interval() default 5;
-    
-    /** 提示消息 */
-    String message() default "操作过于频繁，请稍后再试";
+    int interval() default 5;  ///< 间隔时间（秒），默认 5 秒
+    String message() default "操作过于频繁，请稍后再试";  ///< 提示消息
 }

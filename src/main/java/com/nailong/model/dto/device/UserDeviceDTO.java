@@ -14,32 +14,42 @@ import java.time.LocalDateTime;
 public class UserDeviceDTO {
 
     @Schema(description = "设备ID")
-    private String deviceId;
+    private String deviceId;  ///< 设备ID
+
 
     @Schema(description = "设备名称")
-    private String deviceName;
+    private String deviceName;  ///< 设备名称
+
 
     @Schema(description = "设备类型")
-    private String deviceType;
+    private String deviceType;  ///< 设备类型
+
 
     @Schema(description = "操作系统")
-    private String deviceOs;
+    private String deviceOs;  ///< 操作系统
+
 
     @Schema(description = "浏览器")
-    private String browser;
+    private String browser;  ///< 浏览器
+
 
     @Schema(description = "IP地址")
-    private String ip;
+    private String ip;  ///< IP地址
+
 
     @Schema(description = "IP归属地")
-    private String location;
+    private String location;  ///< IP归属地
+
 
     @Schema(description = "User-Agent")
-    private String userAgent;
+    private String userAgent;  ///< User-Agent
+
 
     @Schema(description = "登录时间")
-    private LocalDateTime loginTime;
+    private LocalDateTime loginTime;  ///< 登录时间
+
 
     @Schema(description = "设备指纹")
-    private String fingerprint;
+    private String fingerprint;  ///< 设备指纹
+
 }

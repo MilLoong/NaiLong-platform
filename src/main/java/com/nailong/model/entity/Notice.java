@@ -18,44 +18,13 @@ public class Notice extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 公告标题
-     */
-    private String title;
-
-    /**
-     * 公告内容
-     */
-    private String content;
-
-    /**
-     * 公告类型(NORMAL/IMPORTANT/URGENT)
-     */
-    private String type;
-
-    /**
-     * 状态(0-隐藏 1-发布)
-     */
-    private Integer status;
-
-    /**
-     * 是否置顶(0-否 1-是)
-     */
-    private Integer top;
-
-    /**
-     * 浏览次数
-     */
-    private Integer viewCount;
-
-    /**
-     * 发布者ID
-     */
-    private Long publisherId;
-
-    /**
-     * 发布时间
-     */
+    private String title;  ///< 公告标题
+    private String content;  ///< 公告内容
+    private String type;  ///< 公告类型(NORMAL/IMPORTANT/URGENT)
+    private Integer status;  ///< 状态(0-隐藏 1-发布)
+    private Integer top;  ///< 是否置顶(0-否 1-是)
+    private Integer viewCount;  ///< 浏览次数
+    private Long publisherId;  ///< 发布者ID
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private LocalDateTime publishTime;
+    private LocalDateTime publishTime;  ///< 发布时间
 }

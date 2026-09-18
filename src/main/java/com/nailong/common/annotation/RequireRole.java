@@ -12,9 +12,6 @@ import java.lang.annotation.*;
 @Documented
 public @interface RequireRole {
     
-    /** 需要的角色，默认为用户角色 */
-    String[] value() default {"USER"};
-    
-    /** 权限验证失败时的提示消息 */
-    String message() default "权限不足，需要管理员角色";
+    String[] value() default {"USER"};  ///< 需要的角色，默认为用户角色
+    String message() default "权限不足，需要管理员角色";  ///< 权限验证失败时的提示消息
 }

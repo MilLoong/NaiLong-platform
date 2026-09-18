@@ -9,11 +9,7 @@ import com.nailong.common.enums.ResultCode;
  */
 public class AuthException extends RuntimeException {
     
-    /**
-     * 错误码
-     */
-    private final int errorCode;
-    
+    private final int errorCode;  ///< 错误码
     /**
      * @brief 构造认证异常（默认未授权错误码）
      * @param msg 错误消息

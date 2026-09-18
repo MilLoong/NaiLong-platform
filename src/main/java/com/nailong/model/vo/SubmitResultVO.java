@@ -14,17 +14,22 @@ import java.io.Serializable;
 public class SubmitResultVO implements Serializable {
     
     @Schema(description = "是否正确")
-    private Boolean correct;
+    private Boolean correct;  ///< 是否正确
+
     
     @Schema(description = "状态")
-    private String status;
+    private String status;  ///< 状态
+
     
     @Schema(description = "获得分数")
-    private Integer score;
+    private Integer score;  ///< 获得分数
+
     
     @Schema(description = "提示信息")
-    private String message;
+    private String message;  ///< 提示信息
+
     
     @Schema(description = "提交ID")
-    private Long submissionId;
+    private Long submissionId;  ///< 提交ID
+
 }

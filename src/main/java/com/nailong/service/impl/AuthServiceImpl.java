@@ -57,29 +57,36 @@ public class AuthServiceImpl implements IAuthService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void register(UserRegisterDTO dto) {
+        // 校验密码强度 -> 查重 username/email -> 校验邮箱验证码 -> 密码哈希落库 -> 删验证码
+
+        // 校验密码强度
         if (!PasswordUtil.isStrongPassword(dto.getPassword())) {
             throw new BusinessException(ResultCode.BAD_REQUEST.getCode(),
                     "密码需包含大小写字母和数字，长度 8-20");
         }
 
+        // username 查重
         LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(User::getUsername, dto.getUsername());
         if (userMapper.selectCount(wrapper) > 0) {
             throw new BusinessException(ResultCode.USER_ALREADY_EXISTS);
         }
 
+        // email 查重
         wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(User::getEmail, dto.getEmail());
         if (userMapper.selectCount(wrapper) > 0) {
             throw new BusinessException(ResultCode.EMAIL_ALREADY_EXISTS);
         }
 
+        // 校验邮箱验证码
         String cacheKey = RedisKey.EMAIL_CODE + "register:" + dto.getEmail();
         String cacheCode = redisTemplate.opsForValue().get(cacheKey);
         if (cacheCode == null || !cacheCode.equals(dto.getCode())) {
             throw new BusinessException(ResultCode.INVALID_VERIFICATION_CODE);
         }
 
+        // 密码哈希落库
         User user = new User();
         BeanUtil.copyProperties(dto, user);
         user.setPassword(PasswordUtil.encode(dto.getPassword()));
@@ -89,6 +96,7 @@ public class AuthServiceImpl implements IAuthService {
         user.setStatus(1);
 
         userMapper.insert(user);
+        // 删验证码
         redisTemplate.delete(cacheKey);
 
         log.info("用户注册成功: username={}, email={}", dto.getUsername(), dto.getEmail());
@@ -102,9 +110,13 @@ public class AuthServiceImpl implements IAuthService {
      */
     @Override
     public LoginVO login(UserLoginDTO dto, String ip) {
+        // 检查登录锁定 -> 按用户名/邮箱查用户 -> 验密码 -> 签发双 Token -> 写 Redis -> 填 LoginVO
+
         String account = dto.getUsername();
+        // 检查登录锁定
         assertNotLocked(account);
 
+        // 按用户名/邮箱查用户并验密码
         User user = userMapper.selectByUsernameOrEmail(account);
         if (user == null || !PasswordUtil.matches(dto.getPassword(), user.getPassword())) {
             recordLoginFailure(account, ip);
@@ -118,16 +130,19 @@ public class AuthServiceImpl implements IAuthService {
 
         clearLoginFailure(account);
 
+        // 更新最后登录信息
         user.setLastLoginTime(LocalDateTime.now());
         user.setLastLoginIp(ip);
         userMapper.updateById(user);
 
+        // 签发双 Token 并写 Redis
         String accessToken = jwtUtil.generateAccessToken(
                 user.getId(), user.getUsername(), user.getRole()
         );
         String refreshToken = jwtUtil.generateRefreshToken(user.getId());
         storeTokens(user.getId(), accessToken, refreshToken);
 
+        // 填 LoginVO
         LoginVO vo = new LoginVO();
         vo.setAccessToken(accessToken);
         vo.setRefreshToken(refreshToken);

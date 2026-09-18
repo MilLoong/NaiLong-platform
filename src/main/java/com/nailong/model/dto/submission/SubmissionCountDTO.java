@@ -15,17 +15,22 @@ import java.io.Serializable;
 public class SubmissionCountDTO implements Serializable {
 
     @Schema(description = "总提交次数")
-    private Integer totalSubmissions;
+    private Integer totalSubmissions;  ///< 总提交次数
+
 
     @Schema(description = "成功提交次数")
-    private Integer successSubmissions;
+    private Integer successSubmissions;  ///< 成功提交次数
+
     
     @Schema(description = "通过率")
-    private Double passRate;
+    private Double passRate;  ///< 通过率
+
     
     @Schema(description = "题目ID")
-    private Long problemId;
+    private Long problemId;  ///< 题目ID
+
     
     @Schema(description = "题目标题")
-    private String problemTitle;
+    private String problemTitle;  ///< 题目标题
+
 }

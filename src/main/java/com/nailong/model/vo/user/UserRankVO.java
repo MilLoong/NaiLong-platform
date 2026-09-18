@@ -16,29 +16,38 @@ import java.time.LocalDateTime;
 public class UserRankVO implements Serializable {
     
     @Schema(description = "用户ID")
-    private Long userId;
+    private Long userId;  ///< 用户ID
+
     
     @Schema(description = "用户名")
-    private String username;
+    private String username;  ///< 用户名
+
     
     @Schema(description = "昵称")
-    private String nickname;
+    private String nickname;  ///< 昵称
+
     
     @Schema(description = "头像")
-    private String avatar;
+    private String avatar;  ///< 头像
+
     
     @Schema(description = "年级")
-    private String grade;
+    private String grade;  ///< 年级
+
     
     @Schema(description = "方向")
-    private String direction;
+    private String direction;  ///< 方向
+
     
     @Schema(description = "总积分")
-    private Integer totalScore;
+    private Integer totalScore;  ///< 总积分
+
     
     @Schema(description = "解题数")
-    private Integer solvedCount;
+    private Integer solvedCount;  ///< 解题数
+
     
     @Schema(description = "排名")
-    private Long rank;
+    private Long rank;  ///< 排名
+
 }

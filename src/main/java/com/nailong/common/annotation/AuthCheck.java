@@ -14,12 +14,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface AuthCheck {
     
-    /** 要求的用户角色 */
-    String role() default "";
-    
-    /** 是否需要管理员权限 */
-    boolean admin() default false;
-    
-    /** 是否需要登录 */
-    boolean login() default true;
+    String role() default "";  ///< 要求的用户角色
+    boolean admin() default false;  ///< 是否需要管理员权限
+    boolean login() default true;  ///< 是否需要登录
 }

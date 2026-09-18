@@ -66,13 +66,17 @@ public class SubmissionServiceImpl implements ISubmissionService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void submitAnswer(SubmitAnswerDTO dto, Long userId, String ip) {
+        // 查题 -> 是否已 AC -> 分布式锁 -> 判题 -> 落库 / 更新积分与衰减分 -> 清缓存
+
         Long problemId = dto.getProblemId();
 
+        // 查题
         Problem problem = problemMapper.selectById(problemId);
         if (problem == null || problem.getStatus() == 0) {
             throw new BusinessException(ResultCode.PROBLEM_NOT_FOUND);
         }
 
+        // 是否已 AC
         LambdaQueryWrapper<Submission> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(Submission::getUserId, userId)
                .eq(Submission::getProblemId, problemId)
@@ -82,6 +86,7 @@ public class SubmissionServiceImpl implements ISubmissionService {
             throw new BusinessException(ResultCode.PROBLEM_ALREADY_SOLVED);
         }
 
+        // 分布式锁
         String lockKey = RedisKey.LOCK + "submit:" + userId + ":" + problemId;
         RLock lock = redissonClient.getLock(lockKey);
 
@@ -90,6 +95,7 @@ public class SubmissionServiceImpl implements ISubmissionService {
                 throw new BusinessException("提交过于频繁，请稍后再试");
             }
 
+            // 判题
             boolean isCorrect = judgeAnswer(problem, dto.getAnswer());
 
             Submission submission = new Submission();
@@ -100,6 +106,7 @@ public class SubmissionServiceImpl implements ISubmissionService {
             submission.setIp(ip);
 
             if (isCorrect) {
+                // 落库 AC，更新题目衰减分与用户积分，清缓存
                 submission.setStatus("ACCEPTED");
 
                 Integer score = problemService.calculateDecayedScore(
@@ -121,6 +128,7 @@ public class SubmissionServiceImpl implements ISubmissionService {
 
                 log.info("答案正确: userId={}, problemId={}, score={}", userId, problemId, score);
             } else {
+                // 落库 WA
                 submission.setStatus("WRONG_ANSWER");
                 submission.setScore(0);
                 submission.setRemark("答案错误");
@@ -232,7 +240,6 @@ public class SubmissionServiceImpl implements ISubmissionService {
      */
     private void clearRankCache() {
         redisTemplate.delete(RedisKey.RANK + "all");
-
         String[] directions = {"frontend", "backend", "android", "design", "operations"};
         for (String direction : directions) {
             redisTemplate.delete(RedisKey.RANK + direction);
